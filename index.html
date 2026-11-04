@@ -486,6 +486,273 @@
     .bird-hitflash{position:absolute;transform:translate(-50%,-50%);font-size:32px;pointer-events:none}
     .bird-sight{position:absolute;transform:translate(-50%,-50%);width:48px;height:48px;border:2px dashed #8e3f2e;border-radius:50%;pointer-events:none;display:grid;place-items:center;color:#8e3f2e;font-size:28px}
     @media(prefers-reduced-motion:reduce){.harvest-spot{transition:none}}
+
+/* FINAL EDITION — visual design and accessibility */
+html{background:#101e2d;}
+:root{--bg:#101e2d;--panel:#f9f4e7;--ink:#162637;--muted:#52677a;--line:#d4c6aa;--accent:#205575;--accent2:#c18a39;--good:#467d62;--danger:#9d3b32}
+body{background:radial-gradient(ellipse at 50% -10%,#2c5367 0%,#162e42 40%,#101e2d 85%);background-attachment:fixed;color:#f9f3e7;font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;line-height:1.5}
+.wrap{width:min(1160px,calc(100% - 28px));margin:28px auto 50px}
+header{position:relative;padding:20px 6px 25px;margin-bottom:12px;border-bottom:1px solid #65809255}
+header h1{font-family:Georgia,'Times New Roman',serif;letter-spacing:-.025em;font-size:clamp(30px,4.2vw,47px);line-height:1.12;color:#fff6e2}
+header h1 em{font-style:normal;color:#f1bf75}
+header p{color:#c8d4d8;margin-top:9px;font-size:14px;max-width:700px}
+.eyebrow{color:#d5ad68;letter-spacing:.21em;font-weight:750;font-size:11px;margin-bottom:10px}
+.panel{box-shadow:0 12px 32px rgba(0,0,0,.10);border-color:#dacdaf;background:linear-gradient(160deg,#fdf9ef,#f4ecdd);color:var(--ink)}
+.game-main{padding:24px;border-radius:20px}
+.game-sidebar{display:flex;flex-direction:column;gap:15px}
+.game-sidebar>.panel{margin:0!important}
+.game-sidebar>.panel:first-child{order:0}
+.game-sidebar>.panel:nth-child(2){order:1}
+.grid{gap:18px}
+.stat{background:#fffdf8;border-color:#e1d6c2;padding:13px}
+.stat small{font-size:12px;letter-spacing:.03em;text-transform:uppercase;font-weight:650}
+.stat strong{font-variant-numeric:tabular-nums;font-size:23px}
+.meter{height:10px;background:#e8dfcc}
+.meter>span{background:#50876e}
+.meter.wood>span{background:linear-gradient(90deg,#a76b31,#dfb662)}
+.meter.hunger>span{background:#c77f4a}
+.day-track{height:5px;margin:15px 0 21px;border-radius:100px;background:#d8d9d1;overflow:hidden}
+.day-track>span{display:block;height:100%;background:linear-gradient(90deg,#2b6880,#d6a353);transition:width .3s}
+.day-total{font-size:.55em;color:#728296;font-weight:500}
+.game-main>.panel{background:#fdf9ef;box-shadow:none}
+.game-main h2{font-family:Georgia,serif;font-size:29px}
+.game-main h3,.game-sidebar h3{font-family:Georgia,serif;font-size:21px}
+.actions{gap:11px;margin:15px 0 4px}
+.actions button{min-height:100px;position:relative;background:#fffdf8;border:1px solid #d8cbb3;box-shadow:0 3px 0 #d8cbb3;padding:15px;border-radius:13px;transition:background .12s,box-shadow .12s,transform .12s,border-color .12s}
+.actions button strong{display:inline-block;font-size:16px;margin-bottom:5px}
+.actions button .rule{display:block;font-size:13px;line-height:1.45}
+.actions button.danger{background:#fff1e8;border-color:#dfbca5;box-shadow:0 3px 0 #dfbca5}
+.actions button:hover:not(:disabled){background:#f3f8f5;border-color:#5d8e83;transform:translateY(-1px)}
+.actions button:active:not(:disabled){transform:translateY(2px);box-shadow:0 0 0 transparent}
+.actions button:disabled{opacity:.46}
+button{font-weight:600}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid #ecb763;outline-offset:3px}
+.primary,.start-btn,.play-again-btn,.next-day-btn,.mini-primary{border-radius:12px;background:linear-gradient(110deg,#215c76,#163b58);color:#fff!important;border:1px solid #397b90;box-shadow:0 4px 0 #15384e;font-weight:750;min-height:51px;text-align:center}
+.primary:hover:not(:disabled),.start-btn:hover:not(:disabled),.next-day-btn:hover:not(:disabled),.mini-primary:hover:not(:disabled){filter:brightness(1.13)}
+.restart-btn{background:transparent;color:var(--accent);font-size:13px;border:1px solid #cbbf9e}
+.pill{background:#f6f0e3;color:#275372;border-color:#d6c5a7;font-weight:600}
+.crew{gap:6px}
+.crew span{width:27px;height:27px}
+.dice-label{text-align:center;margin:3px 0 -8px;letter-spacing:.17em;font-size:10px;font-weight:800;color:#667f88}
+.d20{background:linear-gradient(135deg,#236789,#132f4b);font-family:Georgia,serif;border:3px solid #edc789;clip-path:polygon(50% 0%,93% 25%,100% 72%,67% 100%,33% 100%,0% 72%,7% 25%)}
+.log{max-height:265px;scrollbar-color:#b7ac92 transparent}
+.log p{background:#fffdfa;font-size:13px;line-height:1.45}
+.start-screen{min-height:85vh;min-height:85svh;padding:32px 0}
+.start-card{max-width:780px;padding:clamp(24px,5vw,56px);background:linear-gradient(160deg,#fcf8ee,#efe2c8);border:2px solid #d6b987;color:var(--ink);box-shadow:0 30px 70px #0005;border-radius:24px;position:relative;overflow:hidden}
+.start-card::before,.ending-screen-card::before{content:'';position:absolute;inset:9px;border:1px solid #c8a76b66;pointer-events:none;border-radius:16px}
+.start-card h1{font-family:Georgia,'Times New Roman',serif;line-height:1.05;letter-spacing:-.045em;font-size:clamp(39px,6vw,70px);color:#183e57}
+.start-card h1 em{color:#9a6b2f;font-style:normal}
+.start-card>p{font-size:15px;max-width:550px;margin:15px auto}
+.start-emblem{display:flex;align-items:center;justify-content:center;gap:16px;font-size:36px;color:#ad842c;margin-bottom:8px}
+.start-emblem span{font-size:62px;filter:drop-shadow(0 4px 0 #b6c9ca)}
+.start-rules{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:24px 0}
+.start-rules div{background:#fffaf1;padding:14px;border-color:#d7c9af;font-size:13px;border-radius:12px}
+.start-rules strong{color:#205575;font-size:14px}
+.start-btn{width:min(320px,100%);font-size:17px;padding:14px 20px}
+.start-btn span{font-size:22px;vertical-align:middle}
+.start-card .start-footnote{font-size:12px;color:#6d7d82;margin:16px auto 0}
+.mini-overlay{background:rgba(6,21,35,.87);backdrop-filter:blur(5px);padding:12px}
+.mini-card{background:linear-gradient(#fffbf2,#f2e9d7);color:var(--ink);border:2px solid #d9bf88;padding:clamp(15px,4vw,24px);box-shadow:0 24px 75px #0007;max-height:96vh;max-height:96svh}
+.mini-card h2{font-family:Georgia,serif;font-size:clamp(22px,5vw,31px);color:#173f59}
+.mini-card p{font-size:14px;margin:10px 0}
+.mini-stats{background:#f8efd8;padding:9px;border-radius:9px;color:#34596b;font-weight:700}
+.maze-cell{border-radius:7px;box-shadow:inset 0 2px 1px #ffffff50}
+.maze-cell.wall{background:repeating-linear-gradient(45deg,#5c655e,#5c655e 9px,#697467 9px,#697467 18px)}
+.arrows button{border:1px solid #a8b2a5;background:#fff9eb;text-align:center;border-radius:10px}
+.overlay{backdrop-filter:blur(4px)}
+.overlay-card,.ending-screen-card{background:linear-gradient(140deg,#fcf7eb,#efe1c9);border:2px solid #d9b981;box-shadow:0 20px 60px #08172670;color:#193b50}
+.overlay-card h2{font-family:Georgia,serif;font-size:32px}
+.day-transition{background:radial-gradient(ellipse at center,#244f65,#10273b);color:#f6ead2}
+.day-transition .day-number{font-family:Georgia,serif;color:#f6ddb2;text-shadow:0 4px 15px #0004}
+.day-transition .loading-text{color:#d2c9b2}
+.transition-ornament{margin-top:18px;font-size:33px;color:#ebae55;animation:sunrise .85s ease-out both}
+@keyframes sunrise{from{transform:translateY(12px);opacity:.2}to{transform:translateY(0);opacity:1}}
+.ending-screen{background:radial-gradient(ellipse at center,#254d61,#102336)}
+.ending-screen-card{position:relative;box-shadow:0 24px 80px #0006}
+.ending-screen h2{font-family:Georgia,serif;line-height:1.05;font-size:clamp(36px,7vw,64px);color:#193e57}
+.ending-screen p{color:#465c68;font-size:17px}
+.ending-symbol{font-size:50px;color:#ae8a40;margin-bottom:13px}
+.ending-kicker{color:#a06c37}
+.harvest-spot{background:#e8e9d1}
+.bird-arena{box-shadow:inset 0 6px 24px #235a7333}
+@media(max-width:820px){.game-sidebar{order:2}.game-main{order:1}.grid{grid-template-columns:1fr}.wrap{margin-top:12px}}
+@media(max-width:620px){.start-rules{grid-template-columns:1fr}.start-card{padding:24px 20px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.actions{grid-template-columns:repeat(2,minmax(0,1fr))}.actions button{min-height:115px;padding:12px}.actions button strong{font-size:14px}.actions button .rule{font-size:12px}.game-main{padding:16px}.maze{gap:4px}.mini-card{padding:16px}}
+@media(max-width:375px){.actions{grid-template-columns:1fr}.actions button{min-height:80px}.stat strong{font-size:20px}.arrows{grid-template-columns:repeat(3,60px)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+  
+    body.game-active {
+      overflow: hidden;
+    }
+
+    body.game-active .wrap {
+      width: min(1280px, calc(100% - 18px));
+      margin: 8px auto;
+    }
+
+    body.game-active #gameScreen {
+      height: calc(100vh - 16px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.game-active #gameScreen header {
+      margin-bottom: 10px;
+      flex: 0 0 auto;
+    }
+
+    body.game-active #gameScreen .eyebrow {
+      font-size: 11px;
+      letter-spacing: .18em;
+      margin-bottom: 4px;
+    }
+
+    body.game-active #gameScreen h1 {
+      font-size: clamp(34px, 3.4vw, 50px);
+      margin-bottom: 4px;
+    }
+
+    body.game-active #gameScreen header p {
+      font-size: 14px;
+    }
+
+    body.game-active #gameScreen .grid {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    body.game-active #gameScreen .game-sidebar,
+    body.game-active #gameScreen .game-main {
+      min-height: 0;
+    }
+
+    body.game-active #gameScreen .game-sidebar {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    body.game-active #gameScreen .game-sidebar .panel:first-child {
+      margin-bottom: 12px !important;
+      flex: 0 0 auto;
+    }
+
+    body.game-active #gameScreen .game-sidebar .panel:last-child {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+      margin-bottom: 0 !important;
+    }
+
+    body.game-active #gameScreen .game-main {
+      overflow: auto;
+    }
+
+    body.game-active #gameScreen .panel {
+      padding: 12px;
+      border-radius: 14px;
+    }
+
+    body.game-active #gameScreen .stats {
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    body.game-active #gameScreen .stat {
+      padding: 10px;
+    }
+
+    body.game-active #gameScreen .stat strong {
+      font-size: 18px;
+    }
+
+    body.game-active #gameScreen .rule {
+      font-size: 12.5px;
+      line-height: 1.35;
+    }
+
+    body.game-active #gameScreen .row {
+      gap: 8px;
+    }
+
+    body.game-active #gameScreen .pill {
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+
+    body.game-active #gameScreen h2 {
+      font-size: 20px;
+    }
+
+    body.game-active #gameScreen h3 {
+      font-size: 16px;
+      margin: 0;
+    }
+
+    body.game-active #gameScreen hr {
+      margin: 10px 0 !important;
+    }
+
+    body.game-active #gameScreen .crew {
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    body.game-active #gameScreen .crew span {
+      width: 24px;
+      height: 24px;
+      font-size: 11px;
+    }
+
+    body.game-active #gameScreen .actions {
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    body.game-active #gameScreen .actions button {
+      min-height: 72px;
+      padding: 10px;
+    }
+
+    body.game-active #gameScreen button {
+      padding: 10px 11px;
+    }
+
+    body.game-active #gameScreen .primary {
+      margin-top: 8px;
+    }
+
+    body.game-active #gameScreen .log {
+      max-height: 92px;
+    }
+
+    @media (max-width: 980px) {
+      body.game-active {
+        overflow: auto;
+      }
+
+      body.game-active #gameScreen {
+        height: auto;
+        display: block;
+      }
+
+      body.game-active #gameScreen .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      body.game-active #gameScreen .game-sidebar,
+      body.game-active #gameScreen .game-main,
+      body.game-active #gameScreen .game-sidebar .panel:last-child,
+      body.game-active #gameScreen .game-main {
+        overflow: visible;
+      }
+    }
+
   </style>
 </head>
 
@@ -493,37 +760,40 @@
   <div class="wrap">
     <section id="startScreen" class="start-screen">
       <div class="start-card">
-        <div style="font-size:56px;margin-bottom:10px">⚓🐄</div>
-        <h1>The Odyssey: Survive Thrinacia</h1>
+        <div class="start-emblem" aria-hidden="true">☀ <span>⛵</span> 🐄</div><div class="eyebrow">AN ANCIENT GREEK SURVIVAL ADVENTURE</div>
+        <h1>The Odyssey:<br><em>Survive Thrinacia</em></h1>
         <p>
           You are stranded on Thrinacia with your crew. Survive 30 days, gather food,
           repair the ship, and decide whether stealing Helios's sacred cattle is worth the risk.
         </p>
 
         <div class="start-rules">
-          <div><strong>🎲 Roll a d20</strong><br><span class="rule">Food gathering, birds, fishing, cows, and repairs have minigames. Wood uses a d20.</span></div>
+          <div><strong>🎲 Skill & chance</strong><br><span class="rule">Play five different minigames. Gathering wood uses the animated d20.</span></div>
           <div><strong>🕒 2 actions per day</strong><br><span class="rule">Fish, gather wood, repair, catch birds, forage, or steal cattle.</span></div>
           <div><strong>🪵 Repair the ship</strong><br><span class="rule">Gather wood, then time 3 hammer strikes to install up to 4 wood. Each repair action costs 5% hunger. Reach 100% repair and keep at least 5 crew alive.</span></div>
           <div><strong>🐄 Sacred cattle</strong><br><span class="rule">They give a lot of food, but stealing them can cost crew members and change the ending.</span></div>
         </div>
 
-        <button id="startGame" class="start-btn">Start Game</button>
+        <button id="startGame" class="start-btn">Begin the Voyage <span aria-hidden="true">→</span></button>
+        
       </div>
     </section>
 
     <div id="gameScreen" class="hidden">
     <header>
-      <h1>The Odyssey: Survive Thrinacia</h1>
-      <p>Survive 30 days on Thrinacia, gather wood, repair the ship by hand, and decide whether the sacred cattle are worth the risk.</p>
+<div class="eyebrow">THE ISLAND OF HELIOS · SURVIVAL LOG</div>
+      <h1>The Odyssey: <em>Survive Thrinacia</em></h1>
+      <p>Every day matters. Gather supplies, rebuild your ship, and survive the wrath of Helios.</p>
     </header>
 
     <div class="grid">
       <main class="panel game-main">
         <div class="row">
-          <h2 style="margin:0">Day <span id="day">1</span> of 30</h2>
+<h2 style="margin:0">Day <span id="day">1</span> <small class="day-total">/ 30</small></h2>
           <div class="pill">Actions left: <strong id="actions">2</strong>/2</div>
         </div>
 
+        <div class="day-track" aria-label="Days survived"><span id="dayProgress" style="width:3.33%"></span></div>
         <div class="stats">
           <div class="stat">
             <small>Food</small>
@@ -554,7 +824,7 @@
           <div class="row">
             <div>
               <strong>Ship repair</strong>
-              <div class="rule">30 total wood must be installed. Repairing costs 5% hunger and uses 1 action.</div>
+              <div class="rule">Install 30 wood to finish repairs. Each attempt costs 1 action and 5% hunger.</div>
             </div>
             <strong><span id="repairPercent">0</span>%</strong>
           </div>
@@ -563,9 +833,9 @@
         </div>
 
         <div>
-          <strong>Crew tracker</strong>
+          <strong>⚓ Surviving crew</strong>
           <div id="crewDots" class="crew"></div>
-          <p class="rule">You need at least 5 crew members alive to sail away once the ship is repaired.</p>
+          <p class="rule">At least <strong>5 sailors</strong> must survive to launch your repaired ship.</p>
         </div>
 
         <hr style="border:none;border-top:1px solid var(--line);margin:16px 0">
@@ -610,27 +880,28 @@
           </button>
         </div>
 
-        <button id="endDay" class="primary">End Day Early</button>
+        <button id="endDay" class="primary">☾ End Day Early</button>
       </main>
 
       <aside class="game-sidebar">
         <div class="panel">
 
+          <div class="dice-label">THE FATES DECIDE</div>
           <div class="dice-stage" aria-live="polite">
             <div id="diceVisual" class="d20" aria-label="20-sided die">20</div>
           </div>
 
           <div class="row">
-            <h3 style="margin:0">GM Log</h3>
+            <h3 style="margin:0">📜 Voyage Journal</h3>
             <div id="lastRoll" class="pill">No roll yet</div>
           </div>
           <div id="log" class="log" style="margin-top:12px"></div>
-          <button id="restart" style="width:100%;text-align:center;margin-top:12px">Restart Game</button>
+          <button id="restart" class="restart-btn" style="width:100%;text-align:center;margin-top:12px">↻ Restart Voyage</button>
         </div>
 
         <div class="panel" style="margin-bottom:16px">
-          <h3 style="margin-top:0">Current rules</h3>
-          <p class="rule"><strong>2 actions per day.</strong></p>
+          <h3 style="margin-top:0">📖 How to Survive</h3>
+          <p class="rule"><strong>2 actions per day.</strong> The day advances only after you confirm it.</p>
           <p class="rule"><strong>Wild food:</strong> collect safe food for 15 seconds; avoid poisonous food. Earn up to 1.5 food days.</p>
           <p class="rule"><strong>Birds:</strong> 5 stones to hit moving birds; earn up to 1.5 food days.</p>
           <p class="rule"><strong>Fishing:</strong> keep the moving fish inside your green bar. Every consecutive attempt shrinks the bar; skip a full day and it becomes easier.</p>
@@ -723,17 +994,17 @@
   </section>
   <div id="endingScreen" class="ending-screen hidden" aria-live="assertive">
     <div class="ending-screen-card">
-      <div class="ending-kicker">Your Ending</div>
+      <div class="ending-kicker">THE VOYAGE HAS ENDED</div><div class="ending-symbol" aria-hidden="true">⚓</div>
       <h2 id="endingTitle">Ending</h2>
       <p id="endingText"></p>
-      <button id="playAgain" class="play-again-btn" type="button">Play Again</button>
+      <button id="playAgain" class="play-again-btn" type="button">↻ Play Again</button>
     </div>
   </div>
 
   <div id="actionsOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="actionsOverlayTitle">
     <div class="overlay-card">
       <h2 id="actionsOverlayTitle">Ran out of actions</h2>
-      <p>You used both actions for this day.</p>
+      <p>There is nothing more you can do today. Rest, consume supplies, and face tomorrow.</p>
       <button id="nextDayBtn" class="next-day-btn" type="button">Next Day</button>
     </div>
   </div>
@@ -741,7 +1012,7 @@
   <div id="dayTransition" class="day-transition hidden" aria-live="polite">
     <div>
       <div id="dayTransitionNumber" class="day-number">Day 2</div>
-      <div class="loading-text">Preparing the next day...</div>
+      <div class="loading-text">The sun rises over Thrinacia...</div><div class="transition-ornament" aria-hidden="true">☀</div>
     </div>
   </div>
 
@@ -761,6 +1032,7 @@
       over: false,
       rolling: false,
       awaitingNextDay: false,
+      transitioning: false,
       minigame: false,
       cowVisits: 0
     };
@@ -832,7 +1104,8 @@
     let fishing = null, cow = null, fishFrame = 0, reelHeld = false;
     const fishBounds = {height:260};
     function finishAction(){
-      game.actions--;
+      if (game.over) { render(); return; }
+      game.actions = Math.max(0,game.actions-1);
       render();
       if(game.actions<=0 && !game.over){
         game.awaitingNextDay=true;
@@ -963,7 +1236,7 @@
     }
     function finishCow(success, caught = false){
       if(!cow)return;
-      const second=cow.hard;cow=null;$("cowMini").classList.add("hidden");
+      cow=null;$("cowMini").classList.add("hidden");
       if(success){
         game.food+=3;game.cowEaten=true;game.cowAlert=false;
         addLog("Sacred cow stolen! +3 days of food. Helios will remember.");
@@ -1048,7 +1321,7 @@
       game.repairWood+=usable;
       game.hunger=clamp(game.hunger-5,0,100);
       addLog("Repair minigame: "+hits+"/3 good hits. Installed "+usable+" wood, repair "+Math.round(game.repairWood/30*100)+"%. Hunger -5%.");
-      if(game.hunger<20)loseCrew(1,"Exhausting repairs push the hungry crew too far.");
+      if(game.hunger<20 && !game.over)loseCrew(1,"Exhausting repairs push the hungry crew too far.");
       game.minigame=false;
       if(!game.over)finishAction();
       else render();
@@ -1204,8 +1477,9 @@
     }
 
     async function advanceToNextDay() {
-      if (game.over || !game.awaitingNextDay) return;
-
+      if (game.over || !game.awaitingNextDay || game.transitioning) return;
+      game.transitioning = true;
+      $("nextDayBtn").disabled = true;
       $("actionsOverlay").classList.add("hidden");
       game.awaitingNextDay = false;
 
@@ -1216,6 +1490,11 @@
         game.food -= 1;
         game.hunger = clamp(game.hunger + 10, 0, 100);
         addLog(`End of Day ${previousDay}: the crew consumes 1 day of food.`);
+      } else if (game.food > 0) {
+        const eaten = game.food;
+        game.food = 0;
+        game.hunger = clamp(game.hunger - Math.round((1 - eaten) * 20), 0, 100);
+        addLog(`End of Day ${previousDay}: only ${eaten.toFixed(1)} day of rations remains. Hunger is ${game.hunger}%.`);
       } else {
         game.food = 0;
         game.hunger = clamp(game.hunger - 20, 0, 100);
@@ -1226,9 +1505,11 @@
         loseCrew(1, "Starvation takes its toll.");
       }
 
-      if (game.over) return;
+      if (game.over) { game.transitioning = false; $("nextDayBtn").disabled = false; return; }
 
       if (game.day >= 30) {
+        game.transitioning = false;
+        $("nextDayBtn").disabled = false;
         resolveEnding();
         return;
       }
@@ -1245,11 +1526,13 @@
       await showDayTransition(game.day);
 
       addLog(`Day ${game.day} begins.`);
+      game.transitioning = false;
+      $("nextDayBtn").disabled = false;
       render();
     }
 
     function endDay() {
-      if (game.over || game.awaitingNextDay) return;
+      if (game.over || game.awaitingNextDay || game.minigame || game.rolling) return;
       game.actions = 0;
       game.awaitingNextDay = true;
       $("actionsOverlay").classList.remove("hidden");
@@ -1300,6 +1583,7 @@
 
     function render() {
       $("day").textContent = game.day;
+      $("dayProgress").style.width = (game.day / 30 * 100) + "%";
       $("actions").textContent = game.actions;
       $("food").textContent = game.food.toFixed(1);
       $("wood").textContent = game.wood;
@@ -1327,7 +1611,11 @@
       }
 
       actionButtons.forEach(btn => {
-        btn.disabled = game.over || game.actions <= 0 || game.rolling || game.awaitingNextDay || game.minigame;
+        btn.disabled = game.over || game.actions <= 0 || game.rolling || game.awaitingNextDay || game.minigame
+          || (btn.dataset.action === "repair" && (game.wood <= 0 || game.repairWood >= 30));
+        if (btn.dataset.action === "repair") {
+          btn.title = game.repairWood >= 30 ? "Ship fully repaired" : game.wood <= 0 ? "Gather wood before repairing" : "Repair using your collected wood";
+        }
       });
 
       $("endDay").disabled = game.over || game.rolling || game.awaitingNextDay || game.minigame;
@@ -1348,6 +1636,8 @@
       game.over = false;
       game.rolling = false;
       game.awaitingNextDay = false;
+      game.transitioning = false;
+      $("nextDayBtn").disabled = false;
       game.cowVisits = 0;
       game.minigame = false;
       fishing=null;cow=null;hammer=null;cancelAnimationFrame(fishFrame);cancelAnimationFrame(hammerFrame);
@@ -1381,6 +1671,7 @@
       $("endingScreen").classList.add("hidden");
       $("gameScreen").classList.add("hidden");
       $("startScreen").classList.remove("hidden");
+      document.body.classList.remove("game-active");
       resetGame();
     });
 
@@ -1389,6 +1680,7 @@
     $("startGame").addEventListener("click", () => {
       $("startScreen").classList.add("hidden");
       $("gameScreen").classList.remove("hidden");
+      document.body.classList.add("game-active");
       resetGame();
     });
 
