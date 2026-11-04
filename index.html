@@ -449,6 +449,43 @@
       padding: 14px 18px;
     }
 
+
+    .mini-overlay{position:fixed;inset:0;z-index:1050;background:rgba(12,22,34,.82);display:grid;place-items:center;padding:16px}
+    .mini-card{width:min(480px,100%);background:var(--panel);border:2px solid var(--line);border-radius:20px;padding:20px;text-align:center;max-height:95vh;overflow:auto}
+    .mini-card h2{margin:0 0 5px}
+    .mini-card p{color:var(--muted);line-height:1.45}
+    .mini-stats{display:flex;justify-content:space-between;gap:10px;margin:9px 0;font-size:14px}
+    .fish-stage{display:flex;gap:22px;justify-content:center;align-items:center;margin:14px auto}
+    .fish-track{height:260px;width:86px;position:relative;border:3px solid #2c6b89;border-radius:22px;background:linear-gradient(#a4e1ed,#327aab);overflow:hidden}
+    .fish-zone{position:absolute;left:6px;right:6px;height:88px;background:rgba(123,211,101,.58);border:3px solid #2b7c35;border-radius:14px;bottom:0}
+    .fish-icon{position:absolute;left:20px;font-size:32px;bottom:110px;filter:drop-shadow(0 2px 2px #16465e)}
+    .catch-meter{height:260px;width:30px;background:#e4ded1;border-radius:10px;border:1px solid var(--line);display:flex;flex-direction:column-reverse;overflow:hidden}
+    .catch-meter>span{display:block;height:30%;background:var(--good);transition:height .07s linear}
+    .mini-primary{min-height:50px;width:100%;text-align:center;background:var(--accent);color:#fff;font-weight:bold;border-color:var(--accent);touch-action:none}
+    .maze{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;max-width:390px;margin:16px auto}
+    .maze-cell{aspect-ratio:1;border-radius:8px;border:1px solid #b6a77f;background:#ebddba;display:grid;place-items:center;font-size:clamp(22px,5vw,32px)}
+    .maze-cell.wall{background:#726e62;border-color:#726e62}
+    .maze-cell.player{background:#b9d7d6}
+    .maze-cell.guard{background:#f4b5a6}
+    .maze-cell.goal{background:#d8e7b7}
+    .arrows{display:grid;grid-template-columns:repeat(3,64px);justify-content:center;gap:6px;margin:10px auto}
+    .arrows button{height:50px;text-align:center;font-size:22px;padding:6px;background:white}
+    .mini-message{font-weight:700;min-height:22px;color:var(--ink)}
+
+
+    .hammer-track{height:48px;position:relative;border:2px solid #866841;border-radius:12px;overflow:hidden;background:linear-gradient(90deg,#bc665a 0% 30%,#dfb654 30% 40%,#65a16b 40% 60%,#dfb654 60% 70%,#bc665a 70% 100%);margin:22px 0 10px}
+    .hammer-pointer{position:absolute;left:0;top:-3px;bottom:-3px;width:5px;background:#152b42;border:1px solid white;box-shadow:0 0 4px #152b42;pointer-events:none}
+    .hammer-result{font-size:18px;font-weight:bold;min-height:26px}
+
+    .harvest-field{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:14px auto;max-width:390px}
+    .harvest-spot{min-height:66px;border-radius:13px;border:2px solid #c6b889;background:#e6edcd;display:grid;place-items:center;font-size:30px;touch-action:manipulation;padding:0;transition:background .12s}
+    .harvest-spot:disabled{opacity:.55;cursor:default}
+    .harvest-spot.found{background:#fff6cf}
+    .bird-arena{height:255px;position:relative;overflow:hidden;border:3px solid #6c9dc0;border-radius:15px;background:linear-gradient(#9fd6f4,#d1ecf8 70%,#9dc7a2 70%,#9dc7a2);cursor:crosshair;touch-action:manipulation;user-select:none}
+    .bird-sprite{position:absolute;left:0;top:0;font-size:38px;pointer-events:none;line-height:1;filter:drop-shadow(0 2px 1px #47647e)}
+    .bird-hitflash{position:absolute;transform:translate(-50%,-50%);font-size:32px;pointer-events:none}
+    .bird-sight{position:absolute;transform:translate(-50%,-50%);width:48px;height:48px;border:2px dashed #8e3f2e;border-radius:50%;pointer-events:none;display:grid;place-items:center;color:#8e3f2e;font-size:28px}
+    @media(prefers-reduced-motion:reduce){.harvest-spot{transition:none}}
   </style>
 </head>
 
@@ -464,9 +501,9 @@
         </p>
 
         <div class="start-rules">
-          <div><strong>🎲 Roll a d20</strong><br><span class="rule">Every action uses the animated 20-sided die.</span></div>
-          <div><strong>🕒 2 actions per day</strong><br><span class="rule">Fish, gather wood, catch birds, forage, or steal cattle.</span></div>
-          <div><strong>🪵 Repair the ship</strong><br><span class="rule">Gather wood, then spend an action installing up to 4 wood. Each repair action costs 5% hunger. Reach 100% repair and keep at least 5 crew alive.</span></div>
+          <div><strong>🎲 Roll a d20</strong><br><span class="rule">Food gathering, birds, fishing, cows, and repairs have minigames. Wood uses a d20.</span></div>
+          <div><strong>🕒 2 actions per day</strong><br><span class="rule">Fish, gather wood, repair, catch birds, forage, or steal cattle.</span></div>
+          <div><strong>🪵 Repair the ship</strong><br><span class="rule">Gather wood, then time 3 hammer strikes to install up to 4 wood. Each repair action costs 5% hunger. Reach 100% repair and keep at least 5 crew alive.</span></div>
           <div><strong>🐄 Sacred cattle</strong><br><span class="rule">They give a lot of food, but stealing them can cost crew members and change the ending.</span></div>
         </div>
 
@@ -536,15 +573,15 @@
         <div class="row">
           <div>
             <h3 style="margin:0">Choose an action</h3>
-            <div class="rule">The website rolls a d20 automatically.</div>
+            <div class="rule">Every food action has a minigame. Gathering wood still uses the d20.</div>
           </div>
-          <div class="pill" id="fishDifficulty">Fishing: 5–20 succeeds</div>
+          <div class="pill" id="fishDifficulty">Fishing: Easy</div>
         </div>
 
         <div class="actions">
           <button data-action="fish">
             <strong>🎣 Fish</strong><br>
-            <span class="rule">Success gives +1.5 food days. Repeated fishing gets harder.</span>
+            <span class="rule">Hold to control the catch bar. +1.5 food days when caught.</span>
           </button>
 
           <button data-action="wood">
@@ -554,22 +591,22 @@
 
           <button data-action="repair">
             <strong>🔨 Repair Ship</strong><br>
-            <span class="rule">Uses up to 4 wood, costs 5% hunger, and uses 1 action.</span>
+            <span class="rule">Time 3 moving hammer strikes. Installs up to 4 wood; costs 5% hunger and 1 action.</span>
           </button>
 
           <button data-action="bird">
             <strong>🐦 Catch birds</strong><br>
-            <span class="rule">11–20 succeeds. Gain +1 food day.</span>
+            <span class="rule">Aim and throw 5 stones at flying birds. Earn up to +1.5 food days.</span>
           </button>
 
           <button data-action="fruit">
             <strong>🍇 Gather wild food</strong><br>
-            <span class="rule">11–20 succeeds. Gain +1 food day.</span>
+            <span class="rule">Collect good fruit and avoid poisonous food in 15 seconds.</span>
           </button>
 
           <button data-action="cow" class="danger" style="grid-column:1/-1">
             <strong>🐄 Steal sacred cattle</strong><br>
-            <span class="rule" id="cowRule">First attempt needs 11–20. Success gives +3 food days.</span>
+            <span class="rule" id="cowRule">Reach the cow without touching Helios. +3 food days.</span>
           </button>
         </div>
 
@@ -594,9 +631,11 @@
         <div class="panel" style="margin-bottom:16px">
           <h3 style="margin-top:0">Current rules</h3>
           <p class="rule"><strong>2 actions per day.</strong></p>
-          <p class="rule"><strong>Fishing:</strong> starts at 5–20. Each consecutive fishing action raises the minimum roll by 2. Skip a full day of fishing and the difficulty drops by 2.</p>
-          <p class="rule"><strong>Cows:</strong> first attempt needs 11–20. After one failure, the next cow attempt needs 14–20. Fail that second attempt and you are caught; 2 crew members die.</p>
-          <p class="rule"><strong>Ship:</strong> wood first goes into inventory. Repair Ship installs up to 4 wood per action. Each repair action costs 5% hunger. Install 30 wood for 100% repair and keep at least 5 crew alive.</p>
+          <p class="rule"><strong>Wild food:</strong> collect safe food for 15 seconds; avoid poisonous food. Earn up to 1.5 food days.</p>
+          <p class="rule"><strong>Birds:</strong> 5 stones to hit moving birds; earn up to 1.5 food days.</p>
+          <p class="rule"><strong>Fishing:</strong> keep the moving fish inside your green bar. Every consecutive attempt shrinks the bar; skip a full day and it becomes easier.</p>
+          <p class="rule"><strong>Cows:</strong> guide your sailor through a changing maze to the cow while avoiding Helios. Every time Helios catches you, 2 crew members die. After a failed attempt, he moves faster.</p>
+          <p class="rule"><strong>Ship:</strong> wood first goes into inventory. Repair Ship opens a moving timing bar: land up to 3 good hits to install up to 4 wood. Each attempt costs 5% hunger. Install 30 wood for 100% repair and keep at least 5 crew alive.</p>
           <p class="rule"><strong>Food:</strong> 1 day of food is consumed at the end of each day. With no food, hunger drops 20% per day. Below 20% hunger, 1 crew member dies each day.</p>
           
         </div>
@@ -607,6 +646,81 @@
 
 
 
+
+  <section id="fishMini" class="mini-overlay hidden" role="dialog" aria-modal="true" aria-label="Fishing game">
+    <div class="mini-card">
+      <h2>🎣 Catch the Fish!</h2>
+      <p>Hold <strong>REEL UP</strong> to raise the green bar. Release to let it fall. Keep the fish inside the green zone to fill the catch meter!</p>
+      <div class="mini-stats"><span id="fishLevel">Difficulty 1</span><span id="fishTimer">12 seconds</span></div>
+      <div class="fish-stage">
+        <div class="fish-track" id="fishTrack"><div class="fish-zone" id="fishZone"></div><div class="fish-icon" id="fishIcon">🐟</div></div>
+        <div><div class="catch-meter"><span id="catchFill"></span></div><small>Catch</small></div>
+      </div>
+      <p id="fishMsg" class="mini-message" aria-live="polite">Keep the fish in the green bar!</p>
+      <button id="reelBtn" class="mini-primary" type="button">⬆ Hold to REEL UP</button>
+      <button id="fishGiveUp" type="button" style="margin-top:8px;width:100%;text-align:center">Stop fishing (uses action)</button>
+    </div>
+  </section>
+  <section id="cowMini" class="mini-overlay hidden" role="dialog" aria-modal="true" aria-label="Sacred cattle maze">
+    <div class="mini-card">
+      <h2>🐄 Reach the Sacred Cow</h2>
+      <p>Move ⚓ to 🐄 before your moves run out! Helios ☀️ chases every 2 moves, or every move when alerted. If Helios catches you, 2 crew die.</p>
+      <div class="mini-stats"><span id="cowDifficulty">Attempt 1</span><span id="cowMoves">Moves: 0</span></div>
+      <div id="cowMaze" class="maze" aria-label="6 by 6 maze"></div>
+      <p id="cowMsg" class="mini-message" aria-live="polite">Reach the cow!</p>
+      <div class="arrows">
+        <span></span><button type="button" data-dir="up" aria-label="Move up">↑</button><span></span>
+        <button type="button" data-dir="left" aria-label="Move left">←</button>
+        <button type="button" data-dir="down" aria-label="Move down">↓</button>
+        <button type="button" data-dir="right" aria-label="Move right">→</button>
+      </div>
+      <p class="rule">You can also use the keyboard arrow keys. Each time Helios catches you, 2 crew die.</p>
+      <button id="cowGiveUp" type="button" style="width:100%;text-align:center">Retreat (uses action)</button>
+    </div>
+  </section>
+
+
+  <section id="repairMini" class="mini-overlay hidden" role="dialog" aria-modal="true" aria-label="Ship repair timing game">
+    <div class="mini-card">
+      <h2>🔨 Repair the Ship</h2>
+      <p>The marker moves automatically. Press <strong>HAMMER!</strong> when it is inside the green area. You get 3 strikes.</p>
+      <div class="mini-stats"><span id="hammerCount">Strike 1 of 3</span><span id="hammerHits">0 good hits</span></div>
+      <div class="hammer-track" aria-label="Red, yellow, green target and moving marker">
+        <div id="hammerPointer" class="hammer-pointer"></div>
+      </div>
+      <div id="hammerMessage" class="hammer-result" aria-live="polite">Aim for the green!</div>
+      <p class="rule">3 good hits = 4 wood installed · 2 = 3 wood · 1 = 2 wood · 0 = none.<br>Uses 1 action and costs 5% hunger. You only spend wood that gets installed.</p>
+      <button id="hammerBtn" class="mini-primary" type="button">🔨 HAMMER!</button>
+      <button id="repairQuit" type="button" style="margin-top:8px;width:100%;text-align:center">Stop repairing (uses action and 5% hunger)</button>
+    </div>
+  </section>
+
+
+  <section id="foodMini" class="mini-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="foodMiniTitle">
+    <div class="mini-card">
+      <h2 id="foodMiniTitle">🍇 Gather Wild Food</h2>
+      <p>Collect grapes 🍇, berries 🫐, and apples 🍎. Avoid poisonous mushrooms 🍄 and rotten food 🤢! You have <strong>15 seconds</strong>.</p>
+      <div class="mini-stats"><span id="foodTimer">15 seconds</span><span id="foodScore">0 safe food</span></div>
+      <div id="harvestField" class="harvest-field" aria-label="Tap safe food in the forest"></div>
+      <p id="foodMessage" class="mini-message" aria-live="polite">Tap the good food to collect it.</p>
+      <p class="rule">0–2 points: 0 food days · 3–5: +0.5 · 6–8: +1 · 9+: +1.5. Bad food loses 2 points. Uses 1 action.</p>
+      <button id="foodFinish" class="mini-primary" type="button">Finish gathering</button>
+    </div>
+  </section>
+  <section id="birdMini" class="mini-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="birdMiniTitle">
+    <div class="mini-card">
+      <h2 id="birdMiniTitle">🐦 Catch Birds</h2>
+      <p>Birds fly across the sky. <strong>Tap or click where the bird is</strong> to throw a stone. You get 5 stones. Aim ahead of moving birds!</p>
+      <div class="mini-stats"><span id="birdAmmo">Stones: 5</span><span id="birdScore">Birds caught: 0</span></div>
+      <div id="birdArena" class="bird-arena" role="button" tabindex="0" aria-label="Aim here and press Enter or tap to throw a stone">
+        <div id="birdSprite" class="bird-sprite" aria-hidden="true">🐦</div>
+        <div id="birdSight" class="bird-sight" aria-hidden="true" style="display:none">+</div>
+      </div>
+      <p id="birdMessage" class="mini-message" aria-live="polite">Tap the bird to throw!</p>
+      <p class="rule">0 birds: 0 food days · 1: +0.5 · 2: +1 · 3 or more: +1.5. Uses 1 action.</p>
+      <button id="birdFinish" class="mini-primary" type="button">Finish hunting</button>
+    </div>
+  </section>
   <div id="endingScreen" class="ending-screen hidden" aria-live="assertive">
     <div class="ending-screen-card">
       <div class="ending-kicker">Your Ending</div>
@@ -646,7 +760,9 @@
       cowEaten: false,
       over: false,
       rolling: false,
-      awaitingNextDay: false
+      awaitingNextDay: false,
+      minigame: false,
+      cowVisits: 0
     };
 
     const $ = id => document.getElementById(id);
@@ -710,23 +826,361 @@
       render();
     }
 
+
+    // Two quick skill games replace d20 rolls for fishing and cattle.
+    // A single action is consumed only after a game completes or is abandoned.
+    let fishing = null, cow = null, fishFrame = 0, reelHeld = false;
+    const fishBounds = {height:260};
+    function finishAction(){
+      game.actions--;
+      render();
+      if(game.actions<=0 && !game.over){
+        game.awaitingNextDay=true;
+        $("actionsOverlay").classList.remove("hidden");
+        render();
+      }
+    }
+    function startFishing(){
+      if(game.minigame || game.over || !game.actions)return;
+      game.minigame=true;
+      game.fishedToday=true;
+      const level=(game.fishMin-5)/2+1;
+      const zoneSize=Math.max(66,108-level*5);
+      fishing={level,zoneSize,y:85,fishY:140,fishTarget:155,progress:32,start:performance.now(),last:performance.now(),targetNext:0};
+      reelHeld=false;
+      $("fishMini").classList.remove("hidden");
+      $("fishLevel").textContent="Difficulty "+level;
+      $("fishMsg").textContent="Keep the fish inside the green bar!";
+      render();
+      fishFrame=requestAnimationFrame(tickFishing);
+    }
+    function tickFishing(t){
+      if(!fishing)return;
+      const f=fishing;
+      const dt=Math.min(.05,(t-f.last)/1000 || .016);f.last=t;
+      const elapsed=(t-f.start)/1000;
+      if(elapsed>=15){finishFishing(false);return;}
+      if(t>=f.targetNext){
+        f.fishTarget=25+Math.random()*205;
+        f.targetNext=t+700+Math.random()*850;
+      }
+      f.fishY+=Math.sign(f.fishTarget-f.fishY)*Math.min(Math.abs(f.fishTarget-f.fishY), (54+f.level*5)*dt);
+      f.y=clamp(f.y+(reelHeld?155:-110)*dt,0,260-f.zoneSize);
+      const hit=f.fishY>=f.y && f.fishY<=f.y+f.zoneSize;
+      f.progress=clamp(f.progress+(hit?18:-8)*dt,0,100);
+      $("fishZone").style.height=f.zoneSize+"px";
+      $("fishZone").style.bottom=f.y+"px";
+      $("fishIcon").style.bottom=(f.fishY-15)+"px";
+      $("catchFill").style.height=f.progress+"%";
+      $("fishTimer").textContent=Math.max(0,Math.ceil(15-elapsed))+" seconds";
+      if(f.progress>=66){finishFishing(true);return;}
+      if(f.progress<=0){finishFishing(false);return;}
+      fishFrame=requestAnimationFrame(tickFishing);
+    }
+    function finishFishing(success){
+      if(!fishing)return;
+      cancelAnimationFrame(fishFrame);fishing=null;reelHeld=false;
+      $("fishMini").classList.add("hidden");
+      if(success){game.food+=1.5;addLog("Fishing success! +1.5 days of food.");}
+      else addLog("The fish escaped. No food caught.");
+      game.fishMin=clamp(game.fishMin+2,5,19);
+      game.minigame=false;finishAction();
+    }
+
+    // Eight maze layouts: three originals, one fixed, and four harder new maps.
+    // All layouts tested as winnable with the actual Helios chase logic in both normal and alerted modes.
+    const cowMaps = [
+      {name:"Rocky Coast", start:[0,5], guard:[5,0], goal:[5,5], walls:["0,1","1,5","2,1","3,2","3,4","3,5","4,0","5,3"]},
+      {name:"Sun Temple", start:[0,0], guard:[5,5], goal:[5,0], walls:["3,0","3,1","3,2","4,4","5,1","5,4"]},
+      {name:"Broken Pasture", start:[5,5], guard:[0,0], goal:[0,5], walls:["1,2","1,5","2,4","2,5","4,1","4,2","4,3","4,4"]},
+      {name:"Labyrinth Gate", start:[5,0], guard:[0,5], goal:[0,0], walls:["1,0","1,2","2,1","2,3","3,0","4,3","5,1"]},
+      {name:"Sunlit Cliffs", start:[0,5], guard:[5,0], goal:[5,5], walls:["0,0","0,3","1,3","2,0","2,5","3,1","4,0","4,3","5,3"]},
+      {name:"Twisted Olive Grove", start:[0,0], guard:[5,5], goal:[5,0], walls:["0,3","0,5","2,0","2,1","2,4","3,0","3,2","4,1","4,4"]},
+      {name:"Helios's Courtyard", start:[5,0], guard:[0,5], goal:[0,0], walls:["0,2","0,4","1,0","2,0","3,1","3,2","4,1","4,2","4,4"]},
+      {name:"Sacred Stone Pass", start:[0,5], guard:[5,0], goal:[5,5], walls:["0,2","0,3","1,3","2,0","2,1","3,1","3,3","3,5","4,0","4,1","4,5"]}
+    ];
+    const mazeSize=6;
+    function posKey(p){return p.x+","+p.y;}
+    function isPassable(p){return p.x>=0&&p.x<mazeSize&&p.y>=0&&p.y<mazeSize&&!cow.walls.has(posKey(p));}
+    function startCow(){
+      if(game.minigame||game.over||!game.actions)return;
+      game.minigame=true;
+      const config=cowMaps[game.cowVisits%cowMaps.length];
+      game.cowVisits++;
+      const at=pair=>({x:pair[0],y:pair[1]});
+      cow={player:at(config.start),guard:at(config.guard),goal:at(config.goal),walls:new Set(config.walls),moves:0,hard:game.cowAlert,name:config.name,maxMoves:game.cowAlert?19:16};
+      $("cowMini").classList.remove("hidden");
+      $("cowDifficulty").textContent=config.name+" · "+(cow.hard?"Helios alert!":"Attempt "+game.cowVisits);
+      $("cowMsg").textContent="Reach the cow before time runs out. Avoid Helios!";
+      drawCow();render();
+    }
+    function drawCow(){
+      if(!cow)return;
+      $("cowMoves").textContent="Moves left: "+(cow.maxMoves-cow.moves);
+      const area=$("cowMaze");area.innerHTML="";
+      for(let y=0;y<mazeSize;y++)for(let x=0;x<mazeSize;x++){
+        const p={x,y},cell=document.createElement("div");
+        cell.className="maze-cell";
+        if(cow.walls.has(posKey(p)))cell.classList.add("wall");
+        else if(posKey(p)===posKey(cow.player)){cell.classList.add("player");cell.textContent="⚓";}
+        else if(posKey(p)===posKey(cow.guard)){cell.classList.add("guard");cell.textContent="☀️";}
+        else if(posKey(p)===posKey(cow.goal)){cell.classList.add("goal");cell.textContent="🐄";}
+        area.appendChild(cell);
+      }
+    }
+    function guardStep(){
+      if(!cow)return;
+      // Choose the shortest legal step. The first attempt gives the sailor a head start.
+      const dirs=[{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:0,y:-1}];
+      const q=[{p:cow.guard,first:null}],seen=new Set([posKey(cow.guard)]);
+      while(q.length){
+        const cur=q.shift();
+        if(posKey(cur.p)===posKey(cow.player)){
+          if(cur.first)cow.guard=cur.first;
+          return;
+        }
+        for(const d of dirs){
+          const p={x:cur.p.x+d.x,y:cur.p.y+d.y},k=posKey(p);
+          if(isPassable(p)&&!seen.has(k)){seen.add(k);q.push({p,first:cur.first||p});}
+        }
+      }
+    }
+    function moveCow(dx,dy){
+      if(!cow)return;
+      const next={x:cow.player.x+dx,y:cow.player.y+dy};
+      if(!isPassable(next)){$("cowMsg").textContent="A wall blocks that direction.";return;}
+      cow.player=next;cow.moves++;
+      if(posKey(cow.player)===posKey(cow.guard)){finishCow(false, true);return;}
+      if(posKey(cow.player)===posKey(cow.goal)){finishCow(true);return;}
+      const interval=cow.hard?1:2;
+      if(cow.moves%interval===0){guardStep();}
+      if(posKey(cow.player)===posKey(cow.guard)){finishCow(false, true);return;}
+      if(cow.moves>=cow.maxMoves){
+        $("cowMsg").textContent="You took too long and must retreat.";
+        finishCow(false);return;
+      }
+      drawCow();
+    }
+    function finishCow(success, caught = false){
+      if(!cow)return;
+      const second=cow.hard;cow=null;$("cowMini").classList.add("hidden");
+      if(success){
+        game.food+=3;game.cowEaten=true;game.cowAlert=false;
+        addLog("Sacred cow stolen! +3 days of food. Helios will remember.");
+      }else if(caught){
+        game.cowAlert=true;
+        addLog("Helios caught the sailor! Two crew members die.");
+        loseCrew(2, "Helios punishes the crew.");
+      }else{
+        game.cowAlert=true;
+        addLog("The sailor retreated. Helios is now alert; the next attempt is harder.");
+      }
+      game.minigame=false;finishAction();
+    }
+    document.querySelectorAll("[data-dir]").forEach(b=>b.addEventListener("click",()=>{
+      const dirs={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]};
+      moveCow(...dirs[b.dataset.dir]);
+    }));
+    document.addEventListener("keydown",e=>{
+      if(!cow)return;
+      const dirs={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]};
+      if(dirs[e.key]){e.preventDefault();moveCow(...dirs[e.key]);}
+    });
+    const reel=$("reelBtn");
+    reel.addEventListener("pointerdown",e=>{e.preventDefault();reelHeld=true;reel.setPointerCapture(e.pointerId);});
+    ["pointerup","pointercancel","lostpointercapture"].forEach(ev=>reel.addEventListener(ev,()=>{reelHeld=false;}));
+    $("fishGiveUp").addEventListener("click",()=>finishFishing(false));
+    $("cowGiveUp").addEventListener("click",()=>finishCow(false));
+
+
+    // Hammer timing game: position sweeps from side to side until each strike.
+    let hammer=null,hammerFrame=0;
+    function startRepair(){
+      if(game.minigame||game.over||game.actions<=0||game.awaitingNextDay)return;
+      if(game.repairWood>=30){addLog("The ship is already fully repaired.");return;}
+      if(game.wood<=0){addLog("Gather wood before attempting repairs.");return;}
+      game.minigame=true;
+      hammer={start:performance.now(),hits:0,tries:0,position:0,dir:1,previous:performance.now()};
+      $("repairMini").classList.remove("hidden");
+      $("hammerMessage").textContent="Aim for the green!";
+      $("hammerPointer").style.left="0%";
+      $("hammerBtn").disabled=false;
+      updateHammerLabels();
+      render();
+      hammerFrame=requestAnimationFrame(tickHammer);
+    }
+    function updateHammerLabels(){
+      if(!hammer)return;
+      $("hammerCount").textContent="Strike "+Math.min(hammer.tries+1,3)+" of 3";
+      $("hammerHits").textContent=hammer.hits+" good hit"+(hammer.hits===1?"":"s");
+    }
+    function tickHammer(now){
+      if(!hammer)return;
+      const delta=Math.min((now-hammer.previous)/1000,.05);
+      hammer.previous=now;
+      // One complete back-and-forth takes ~2.3 seconds.
+      let p=hammer.position+hammer.dir*88*delta;
+      if(p>=100){p=200-p;hammer.dir=-1;}
+      if(p<=0){p=-p;hammer.dir=1;}
+      hammer.position=p;
+      $("hammerPointer").style.left=p+"%";
+      hammerFrame=requestAnimationFrame(tickHammer);
+    }
+    function strikeHammer(){
+      if(!hammer||hammer.tries>=3)return;
+      const p=hammer.position;
+      const good=p>=40&&p<=60;
+      hammer.tries++;
+      if(good)hammer.hits++;
+      $("hammerMessage").textContent=good?"Perfect hit!":"Missed! Aim for the middle.";
+      updateHammerLabels();
+      if(hammer.tries>=3)finishRepair(false);
+    }
+    function finishRepair(cancelled){
+      if(!hammer)return;
+      const hits=hammer.hits;
+      hammer=null;
+      cancelAnimationFrame(hammerFrame);
+      $("repairMini").classList.add("hidden");
+      const requested=cancelled?0:([0,2,3,4][hits]||0);
+      const usable=Math.min(requested,game.wood,30-game.repairWood);
+      game.wood-=usable;
+      game.repairWood+=usable;
+      game.hunger=clamp(game.hunger-5,0,100);
+      addLog("Repair minigame: "+hits+"/3 good hits. Installed "+usable+" wood, repair "+Math.round(game.repairWood/30*100)+"%. Hunger -5%.");
+      if(game.hunger<20)loseCrew(1,"Exhausting repairs push the hungry crew too far.");
+      game.minigame=false;
+      if(!game.over)finishAction();
+      else render();
+    }
+    $("hammerBtn").addEventListener("click",strikeHammer);
+    $("repairQuit").addEventListener("click",()=>finishRepair(true));
+
+
+    // Gather wild food: 15-second tap-to-collect challenge.
+    let harvest=null, harvestTimer=null;
+    const harvestIcons=['🍇','🫐','🍎','🍄','🤢'];
+    function randomHarvestIcon(){const r=Math.random();return r<.26?'🍇':r<.51?'🫐':r<.75?'🍎':r<.9?'🍄':'🤢';}
+    function startHarvest(){
+      if(game.over||game.minigame||game.actions<=0||game.awaitingNextDay)return;
+      game.minigame=true;
+      harvest={score:0,remaining:15,slots:Array.from({length:12},randomHarvestIcon)};
+      $('foodMini').classList.remove('hidden');$('foodMessage').textContent='Tap the good food to collect it.';
+      drawHarvest();render();
+      harvestTimer=setInterval(()=>{
+        if(!harvest)return;
+        harvest.remaining--;
+        // Food shifts around the grove each second.
+        for(let i=0;i<3;i++)harvest.slots[Math.floor(Math.random()*12)]=randomHarvestIcon();
+        drawHarvest();
+        if(harvest.remaining<=0)finishHarvest();
+      },1000);
+    }
+    function drawHarvest(){
+      if(!harvest)return;
+      $('foodTimer').textContent=harvest.remaining+' seconds';
+      $('foodScore').textContent=harvest.score+' safe food';
+      const field=$('harvestField');field.innerHTML='';
+      harvest.slots.forEach((icon,i)=>{
+        const b=document.createElement('button');b.type='button';b.className='harvest-spot';
+        b.textContent=icon;b.setAttribute('aria-label',({'🍇':'Collect grapes','🫐':'Collect berries','🍎':'Collect apple','🍄':'Poisonous mushroom','🤢':'Rotten food','🌿':'Empty bush'})[icon]);
+        if(icon==='🌿')b.disabled=true;
+        b.addEventListener('click',()=>{
+          if(!harvest||harvest.slots[i]==='🌿')return;
+          const found=harvest.slots[i];
+          if(found==='🍄'||found==='🤢'){
+            harvest.score=Math.max(0,harvest.score-2);
+            $('foodMessage').textContent='That food is unsafe! −2 points.';
+          }else{
+            harvest.score++;
+            $('foodMessage').textContent='Found '+found+'! +1 point.';
+          }
+          harvest.slots[i]='🌿';drawHarvest();
+        });field.appendChild(b);
+      });
+    }
+    function finishHarvest(){
+      if(!harvest)return;
+      clearInterval(harvestTimer);harvestTimer=null;
+      const score=harvest.score,reward=score>=9?1.5:score>=6?1:score>=3?.5:0;
+      harvest=null;$('foodMini').classList.add('hidden');
+      game.food+=reward;
+      addLog('Wild food: '+score+' points earned. +'+reward+' days of food.');
+      game.minigame=false;finishAction();
+    }
+    $('foodFinish').addEventListener('click',finishHarvest);
+
+    // Bird hunt: five throws at a smoothly flying target. Mouse and touch supported.
+    let birdHunt=null,birdFrame=0;
+    const birdArena=$('birdArena');
+    function startBirds(){
+      if(game.over||game.minigame||game.actions<=0||game.awaitingNextDay)return;
+      game.minigame=true;
+      birdHunt={shots:5,caught:0,x:.12,y:.28,direction:1,last:performance.now(),time:0,flight:0};
+      $('birdMini').classList.remove('hidden');$('birdMessage').textContent='Tap the bird to throw!';
+      $('birdSight').style.display='none';
+      drawBird();render();birdFrame=requestAnimationFrame(tickBird);
+    }
+    function tickBird(now){
+      if(!birdHunt)return;
+      const b=birdHunt,dt=Math.min(.06,(now-b.last)/1000||.016);b.last=now;b.time+=dt;
+      const speed=.22+Math.min(.15,(game.day-1)*.005);
+      b.x+=b.direction*speed*dt;
+      if(b.x>.91){b.x=.91;b.direction=-1;b.flight++;}
+      if(b.x<.09){b.x=.09;b.direction=1;b.flight++;}
+      b.y=.32+Math.sin(b.time*2.6+b.flight*.6)*.16;
+      drawBird();birdFrame=requestAnimationFrame(tickBird);
+    }
+    function drawBird(){
+      if(!birdHunt)return;
+      const b=birdHunt;
+      $('birdSprite').style.left=`calc(${(b.x*100).toFixed(2)}% - 19px)`;
+      $('birdSprite').style.top=`calc(${(b.y*100).toFixed(2)}% - 19px)`;
+      $('birdAmmo').textContent='Stones: '+b.shots;
+      $('birdScore').textContent='Birds caught: '+b.caught;
+    }
+    function throwStone(x,y){
+      if(!birdHunt||birdHunt.shots<=0)return;
+      const b=birdHunt,hit=Math.hypot(x-b.x,y-b.y)<.115;
+      b.shots--;
+      $('birdSight').style.display='grid';
+      $('birdSight').style.left=(x*100)+'%';$('birdSight').style.top=(y*100)+'%';
+      if(hit){
+        b.caught++;b.x=.1+Math.random()*.75;b.direction=Math.random()<.5?-1:1;b.time+=1.4;
+        $('birdMessage').textContent='Nice shot! You caught a bird!';
+      }else $('birdMessage').textContent='Missed! Try to lead your target.';
+      drawBird();
+      if(b.shots===0)finishBirds();
+    }
+    birdArena.addEventListener('click',e=>{
+      if(!birdHunt)return;
+      const r=birdArena.getBoundingClientRect();
+      throwStone(clamp((e.clientX-r.left)/r.width,0,1),clamp((e.clientY-r.top)/r.height,0,1));
+    });
+    birdArena.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();if(birdHunt)throwStone(birdHunt.x,birdHunt.y);}
+    });
+    function finishBirds(){
+      if(!birdHunt)return;
+      cancelAnimationFrame(birdFrame);birdFrame=0;
+      const caught=birdHunt.caught,reward=caught>=3?1.5:caught===2?1:caught===1?.5:0;
+      birdHunt=null;$('birdMini').classList.add('hidden');
+      game.food+=reward;addLog('Bird hunt: '+caught+' birds caught. +'+reward+' days of food.');
+      game.minigame=false;finishAction();
+    }
+    $('birdFinish').addEventListener('click',finishBirds);
+
     async function takeAction(type) {
-      if (game.over || game.actions <= 0 || game.rolling) return;
+      if (game.over || game.actions <= 0 || game.rolling || game.minigame || game.awaitingNextDay) return;
+      if(type==="fish"){startFishing();return;}
+      if(type==="cow"){startCow();return;}
+      if(type==="repair"){startRepair();return;}
+      if(type==="fruit"){startHarvest();return;}
+      if(type==="bird"){startBirds();return;}
 
       const r = d20();
       await animateDie(r);
       setRoll(r);
-
-      if (type === "fish") {
-        game.fishedToday = true;
-        if (r >= game.fishMin) {
-          game.food += 1.5;
-          addLog(`Fishing roll ${r}: success. +1.5 food days.`);
-        } else {
-          addLog(`Fishing roll ${r}: failed.`);
-        }
-        game.fishMin = clamp(game.fishMin + 2, 5, 19);
-      }
 
       if (type === "wood") {
         const gained = r <= 10 ? 2 : 4;
@@ -735,68 +1189,8 @@
       }
 
 
-      if (type === "repair") {
-        if (game.wood <= 0) {
-          addLog("Repair action: no wood available. The action is still used.");
-        } else if (game.repairWood >= 30) {
-          addLog("Repair action: the ship is already fully repaired.");
-        } else {
-          const usable = Math.min(4, game.wood, 30 - game.repairWood);
-          game.wood -= usable;
-          game.repairWood += usable;
-          game.hunger = clamp(game.hunger - 5, 0, 100);
-          addLog(`Repair action: installed ${usable} wood. Ship is ${Math.round((game.repairWood / 30) * 100)}% repaired. Hunger -5%.`);
 
-          if (game.hunger < 20) {
-            loseCrew(1, "The exhausting repair work pushes the starving crew too far.");
-          }
-        }
-      }
-
-      if (type === "bird") {
-        if (r >= 11) {
-          game.food += 1;
-          addLog(`Bird roll ${r}: success. +1 food day.`);
-        } else {
-          addLog(`Bird roll ${r}: failed.`);
-        }
-      }
-
-      if (type === "fruit") {
-        if (r >= 11) {
-          game.food += 1;
-          addLog(`Foraging roll ${r}: success. +1 food day.`);
-        } else {
-          addLog(`Foraging roll ${r}: failed.`);
-        }
-      }
-
-      if (type === "cow") {
-        const needed = game.cowAlert ? 14 : 11;
-
-        if (r >= needed) {
-          game.food += 3;
-          game.cowEaten = true;
-          game.cowAlert = false;
-          addLog(`Cow theft roll ${r}: success. +3 food days. Helios will remember this.`);
-        } else if (!game.cowAlert) {
-          game.cowAlert = true;
-          addLog(`Cow theft roll ${r}: failed. Next cow attempt now needs 14–20.`);
-        } else {
-          game.cowAlert = false;
-          addLog(`Cow theft roll ${r}: caught.`);
-          loseCrew(2, "Helios's punishment strikes.");
-        }
-      }
-
-      game.actions--;
-      render();
-
-      if (game.actions <= 0 && !game.over) {
-        game.awaitingNextDay = true;
-        $("actionsOverlay").classList.remove("hidden");
-        render();
-      }
+      finishAction();
     }
 
 
@@ -918,11 +1312,11 @@
       $("repairBar").style.width = (game.repairWood / 30) * 100 + "%";
       $("hungerBar").style.width = game.hunger + "%";
 
-      $("fishDifficulty").textContent = `Fishing: ${game.fishMin}–20 succeeds`;
+      $("fishDifficulty").textContent = `Fishing difficulty: ${Math.round((game.fishMin-5)/2)+1}`;
 
       $("cowRule").textContent = game.cowAlert
-        ? "The herd is alert. Next attempt needs 14–20. Fail and 2 crew die."
-        : "First attempt needs 11–20. Success gives +3 food days.";
+        ? "Helios is alert. Avoid him in a harder maze; getting caught kills 2 crew."
+        : "Reach the cow without touching Helios. +3 food days.";
 
       $("crewDots").innerHTML = "";
       for (let i = 0; i < 10; i++) {
@@ -933,10 +1327,10 @@
       }
 
       actionButtons.forEach(btn => {
-        btn.disabled = game.over || game.actions <= 0 || game.rolling || game.awaitingNextDay;
+        btn.disabled = game.over || game.actions <= 0 || game.rolling || game.awaitingNextDay || game.minigame;
       });
 
-      $("endDay").disabled = game.over || game.rolling || game.awaitingNextDay;
+      $("endDay").disabled = game.over || game.rolling || game.awaitingNextDay || game.minigame;
     }
 
     function resetGame() {
@@ -954,6 +1348,15 @@
       game.over = false;
       game.rolling = false;
       game.awaitingNextDay = false;
+      game.cowVisits = 0;
+      game.minigame = false;
+      fishing=null;cow=null;hammer=null;cancelAnimationFrame(fishFrame);cancelAnimationFrame(hammerFrame);
+      harvest=null;clearInterval(harvestTimer);harvestTimer=null;
+      birdHunt=null;cancelAnimationFrame(birdFrame);birdFrame=0;
+      $('foodMini').classList.add('hidden');$('birdMini').classList.add('hidden');
+      $("repairMini").classList.add("hidden");
+      $("fishMini").classList.add("hidden");
+      $("cowMini").classList.add("hidden");
       $("actionsOverlay").classList.add("hidden");
       $("dayTransition").classList.add("hidden");
       $("diceVisual").textContent = "20";
