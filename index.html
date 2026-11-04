@@ -753,6 +753,32 @@ button:focus-visible,[tabindex]:focus-visible{outline:3px solid #ecb763;outline-
       }
     }
 
+
+    /* Discreet parchment scrolling: keep the panels usable without bulky OS scrollbars. */
+    body.game-active #gameScreen .game-main,
+    body.game-active #gameScreen .game-sidebar .panel:last-child {
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none;
+    }
+    body.game-active #gameScreen .game-main::-webkit-scrollbar,
+    body.game-active #gameScreen .game-sidebar .panel:last-child::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    /* The Voyage Journal retains an unobtrusive parchment-colored scrollbar. */
+    #gameScreen .log {
+      scrollbar-width: thin;
+      scrollbar-color: #c9b58e transparent;
+    }
+    #gameScreen .log::-webkit-scrollbar { width: 5px; }
+    #gameScreen .log::-webkit-scrollbar-track { background: transparent; }
+    #gameScreen .log::-webkit-scrollbar-thumb {
+      background: #c9b58e;
+      border-radius: 999px;
+    }
+
   </style>
 </head>
 
